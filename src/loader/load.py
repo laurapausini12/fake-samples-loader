@@ -50,6 +50,9 @@ def _get_json_from_sample_objects_list(sample_objects_list):
         is_first_sample = False
     return samples_json + "]"
 
+def _remove_query_params_from_url(url):
+    return url.split("?")[0]
+
 
 def _get_sample_objects_from_source_samples_data_dict(source_samples_data_dict):
     samples = []
@@ -57,10 +60,10 @@ def _get_sample_objects_from_source_samples_data_dict(source_samples_data_dict):
         if sample_json != START_STRING:
             samples.append(Sample(
                 title=sample_json[TITLE_FIELD], 
-                artistName=sample_json[ARTIST_NAME_FIELD], 
+                artist_name=sample_json[ARTIST_NAME_FIELD], 
                 duration=sample_json[DURATION_FIELD], 
-                releasedOn=sample_json[RELEASED_ON_FIELD],
-                url=sample_json[URL_FIELD]))
+                released_on=sample_json[RELEASED_ON_FIELD],
+                url=_remove_query_params_from_url(sample_json[URL_FIELD])))
     return samples
 
 def _get_text_after_start_string(text):
@@ -81,7 +84,6 @@ def _get_first_string_between_two_strings(string, string1, string2):
 
 
 def _is_response_text_valid(response_text):
-    print("REEEESPOOOONSE")
     print(_get_first_string_between_two_strings(response_text, "response\":", "});"))
     return _get_first_string_between_two_strings(response_text, "response\":", "});") == "null"
 
