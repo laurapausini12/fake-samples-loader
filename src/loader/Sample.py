@@ -4,7 +4,7 @@ class Sample:
 
     def __init__(self, title, artist_name, duration, released_on, url, album_name=None):
         self.title = title
-        self.artist_ame = artist_name
+        self.artist_name = artist_name
         self.album_name = album_name
         self.duration = duration
         self.released_on = released_on
