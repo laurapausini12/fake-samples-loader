@@ -40,13 +40,13 @@ def get_samples(arg1, arg2, arg3, arg4=29):
     samples_objects_list = _get_sample_objects_from_source_samples_data_dict(source_samples_data_dict)
     return _get_json_from_sample_objects_list(samples_objects_list)
 
-def _get_json_from_sample_objects_list(sample_objects_list):
+def _get_json_from_sample_objects_list(sample_objects_list: list[Sample]):
     samples_json = "["
     is_first_sample = True
     for sample_object in sample_objects_list:
         if not is_first_sample:
             samples_json += ","
-        samples_json += sample_object.toJSON()
+        samples_json += sample_object.to_json()
         is_first_sample = False
     return samples_json + "]"
 
@@ -54,8 +54,8 @@ def _remove_query_params_from_url(url):
     return url.split("?")[0]
 
 
-def _get_sample_objects_from_source_samples_data_dict(source_samples_data_dict):
-    samples = []
+def _get_sample_objects_from_source_samples_data_dict(source_samples_data_dict) -> list[Sample]:
+    samples = list()
     for sample_json in source_samples_data_dict:
         if sample_json != START_STRING:
             samples.append(Sample(
